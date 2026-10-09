@@ -50,10 +50,10 @@ while response.status_code == 200:
 
     if "Отправьте GET-запрос" in result_html:
         rout_url = parser_html_route(result_html[result_html.find("Отправьте GET-запрос"):])
-        response = requests.get(URL + rout_url, cookies=cookies, params=params, headers=headers)
+        response = requests.get(URL + rout_url, cookies=cookies, params=params, headers=headers,timeout=None)
     elif "Отправьте POST-запрос" in result_html:
         rout_url = parser_html_route(result_html[result_html.find("Отправьте POST-запрос"):])
-        response = requests.post(URL + rout_url, cookies=cookies, params=params, headers=headers, data=body)
+        response = requests.post(URL + rout_url, cookies=cookies, params=params, headers=headers, data=body,timeout=None)
     elif "Загрузите файлы по адресу" in result_html:
         rout_url = parser_html_route(result_html[result_html.find("Загрузите файлы по адресу"):])
         files_dict = parser_html(result_html)
@@ -61,10 +61,10 @@ while response.status_code == 200:
             ('file', (fname, io.BytesIO(fcontent.encode('utf-8')), 'text/plain'))
             for fname, fcontent in files_dict.items()
         ]
-        response = requests.post(URL + rout_url, cookies=cookies, files=files_to_send)
+        response = requests.post(URL + rout_url, cookies=cookies, files=files_to_send,timeout=None)
     elif "Перейдите по" in result_html:
         rout_url = parser_html_route_teg_a(result_html[result_html.find("Перейдите по"):])
-        response = requests.get(URL + rout_url, cookies=cookies, params=params, headers=headers)
+        response = requests.get(URL + rout_url, cookies=cookies, params=params, headers=headers,timeout=None)
     else:
         print(result_html)
         break
